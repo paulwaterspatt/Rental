@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rental Registration</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <!--1st column-->
+      <div class="col p-3">
+        <h5>Property price: £500</h5>
+        <br>
+        <h6>Affordability</h6>
+        <form id="doa-form">
+          <div class="mb-3 d-flex">
+            <label for="numberInput" class="form-label me-1">Enter Monthly Budget</label>
+            <input type="number" class="form-control" id="numberInput" placeholder="Enter £ budget..." required>
+            <button type="submit" class="btn btn-primary ms-2">Calculate Affordability</button>
+          </div>
+        </form>
+
+        <div class="mt-3">
+          <p>Annual Earnings threshold: <span id="result">£0.00</span></p>
+          <p id="approvalResult"></p> <!-- This is where the acceptance message will appear -->
+        </div>
+      </div>
+      <!-- End of 1st column -->
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('doa-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      let inputValue = document.getElementById('numberInput').value;
+      let result = inputValue * 30;
+      
+      // Format the result as UK currency
+      let formattedResult = new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP'
+      }).format(result);
+
+      // Display the formatted result
+      document.getElementById('result').textContent = formattedResult;
+
+      // Property price
+      const propertyPrice = 500;
+
+      // Check if the result is equal to or greater than 30 times the property price
+      if (result >= (propertyPrice * 30)) {
+        document.getElementById('approvalResult').textContent = "Accepted";
+        document.getElementById('approvalResult').style.color = "green";
+      } else {
+        document.getElementById('approvalResult').textContent = "Declined";
+        document.getElementById('approvalResult').style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
